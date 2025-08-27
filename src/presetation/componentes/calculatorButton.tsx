@@ -1,4 +1,4 @@
-import { Pressable, Text, TextStyle, StyleProp } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { colors, styles } from '../theme/app-theme';
 
 interface Props {
