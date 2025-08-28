@@ -1,29 +1,38 @@
 import { Text, View } from 'react-native';
 import { colors, styles } from '../theme/app-theme';
 import CalculatorButton from '../componentes/calculatorButton';
+import { useCalculator } from '../hooks/useCalculator';
 
 export default function CaculadoraScreen() {
+  const { number, bulildNumber, clean, deleteOperation, toggleSingle } =
+    useCalculator();
   return (
     <View style={styles.calculatorContainer}>
       <View style={{ paddingHorizontal: 30, paddingBottom: 20 }}>
-        <Text style={styles.mainResoults}>1500</Text>
+        <Text
+          adjustsFontSizeToFit
+          numberOfLines={1}
+          style={styles.mainResoults}
+        >
+          {number}
+        </Text>
         <Text style={styles.subResults}>150</Text>
       </View>
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => console.log('C')}
+          onPress={() => clean('C')}
           lable="C"
           color={colors.lightGray}
           labelTextColor
         />
         <CalculatorButton
-          onPress={() => console.log('+/-')}
+          onPress={() => toggleSingle()}
           lable="+/-"
           color={colors.lightGray}
           labelTextColor
         />
         <CalculatorButton
-          onPress={() => console.log('del')}
+          onPress={() => deleteOperation('del')}
           lable="del"
           color={colors.lightGray}
           labelTextColor
@@ -36,17 +45,17 @@ export default function CaculadoraScreen() {
       </View>
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => console.log('7')}
+          onPress={() => bulildNumber('7')}
           lable="7"
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('8')}
+          onPress={() => bulildNumber('8')}
           lable="8"
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('9')}
+          onPress={() => bulildNumber('9')}
           lable="9"
           color={colors.darakGray}
         />
@@ -58,17 +67,17 @@ export default function CaculadoraScreen() {
       </View>
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => console.log('6')}
+          onPress={() => bulildNumber('6')}
           lable="6"
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('5')}
+          onPress={() => bulildNumber('5')}
           lable="5"
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('4')}
+          onPress={() => bulildNumber('4')}
           lable="4"
           color={colors.darakGray}
         />
@@ -80,17 +89,17 @@ export default function CaculadoraScreen() {
       </View>
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => console.log('3')}
+          onPress={() => bulildNumber('3')}
           lable="3"
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('2')}
+          onPress={() => bulildNumber('2')}
           lable="2"
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('1')}
+          onPress={() => bulildNumber('1')}
           lable="1"
           color={colors.darakGray}
         />
@@ -102,13 +111,13 @@ export default function CaculadoraScreen() {
       </View>
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => console.log('0')}
+          onPress={() => bulildNumber('0')}
           lable="0"
           color={colors.darakGray}
           dobleSize
         />
         <CalculatorButton
-          onPress={() => console.log('.')}
+          onPress={() => bulildNumber('.')}
           lable="."
           color={colors.darakGray}
         />
