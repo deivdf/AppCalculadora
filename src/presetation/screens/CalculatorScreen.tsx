@@ -7,6 +7,7 @@ export default function CaculadoraScreen() {
   const {
     number,
     prevnumber,
+    formula,
     bulildNumber,
     clean,
     deleteOperation,
@@ -26,14 +27,22 @@ export default function CaculadoraScreen() {
           numberOfLines={1}
           style={styles.mainResoults}
         >
-          {number}
+          {formula}
         </Text>
-        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.subResults}>
-          {
-            //es para que cuando el numero previo que es el de abajo este en 0 se desaparesca
-            prevnumber === '0' ? ' ' : prevnumber
-          }
-        </Text>
+        {formula === prevnumber ? (
+          <Text style={styles.subResults}> </Text>
+        ) : (
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            style={styles.subResults}
+          >
+            {
+              //es para que cuando el numero previo que es el de abajo este en 0 se desaparesca
+              prevnumber
+            }
+          </Text>
+        )}
       </View>
       <View style={styles.row}>
         <CalculatorButton

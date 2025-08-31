@@ -1,20 +1,35 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 enum Operator {
-  add,
-  subtract,
-  multiply,
-  divide,
+  add = '+',
+  subtract = '-',
+  multiply = 'x',
+  divide = '÷',
 }
 export const useCalculator = () => {
+  const [formula, setFormula] = useState('');
   const [number, setNumber] = useState('0');
   //este estado es para guardar el numero anterior en la parte de abajo de la calculadora
   const [prevnumber, setPrevnumber] = useState('0');
+  //este useEffect es para para mostrar la operacion en la calculadora en el number osea en pantalla
 
   const lastOperator = useRef<Operator>();
-
+  useEffect(() => {
+    if (lastOperator.current) {
+      const firstFormulaPart = formula.split(' ')[0];
+      setFormula(`${firstFormulaPart} ${lastOperator.current} ${number}`);
+    } else {
+      setFormula(`${number}`);
+    }
+  }, [number]);
+  useEffect(() => {
+    const subResul = calculetaSubresult();
+    setPrevnumber(subResul.toString());
+  }, [formula]);
   const clean = () => {
     setNumber('0');
     setPrevnumber('0');
+    lastOperator.current = undefined;
+    setFormula('');
   };
   const deleteOperation = (deleteOper: string) => {
     //let currenSing = '';
@@ -73,7 +88,6 @@ export const useCalculator = () => {
   };
 
   const divideOperation = () => {
-    //en este metodo se establece la validacion anterior y despues la operación
     setLastNumber();
     lastOperator.current = Operator.divide;
   };
@@ -91,30 +105,43 @@ export const useCalculator = () => {
   };
   //este metodo se encarga de realizar la operación
   const calculateResult = () => {
-    //estos son las operaciones que se pueden realizar
-    const num1 = Number(number);
-    const num2 = Number(prevnumber);
-    switch (lastOperator.current) {
-      case Operator.add:
-        setNumber(`${num1 + num2}`);
-        break;
-      case Operator.subtract:
-        setNumber(`${num2 - num1}`);
-        break;
-      case Operator.multiply:
-        setNumber(`${num1 * num2}`);
-        break;
-      case Operator.divide:
-        setNumber(`${num2 / num1}`);
-        break;
-    }
+    const result = calculetaSubresult();
+    setNumber(result.toString());
+    lastOperator.current = undefined;
     setPrevnumber('0');
+  };
+  const calculetaSubresult = (): number => {
+    const [firstValune, Operation, secondValue] = formula.split(' ');
+    //estos son las operaciones que se pueden realizar
+    const num1 = Number(firstValune);
+    const num2 = Number(secondValue);
+    if (isNaN(num2)) {
+      return num1 || 0;
+    }
+    switch (Operation) {
+      case Operator.add:
+        return num1 + num2;
+      case Operator.subtract:
+        return num1 - num2;
+      case Operator.multiply:
+        return num1 * num2;
+      case Operator.divide:
+        if (num2 === 0) {
+          console.log('no se puede dividir por cero');
+          return 0;
+        }
+        return num1 / num2;
+      default:
+        throw new Error('Operación no válida');
+        return num1;
+    }
   };
 
   return {
     //properties
     number,
     prevnumber,
+    formula,
     //methods
     bulildNumber,
     clean,
