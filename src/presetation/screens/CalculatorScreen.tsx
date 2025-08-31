@@ -4,8 +4,20 @@ import CalculatorButton from '../componentes/calculatorButton';
 import { useCalculator } from '../hooks/useCalculator';
 
 export default function CaculadoraScreen() {
-  const { number, bulildNumber, clean, deleteOperation, toggleSingle } =
-    useCalculator();
+  const {
+    number,
+    prevnumber,
+    bulildNumber,
+    clean,
+    deleteOperation,
+    toggleSingle,
+    divideOperation,
+    multiplyOperation,
+    addOperation,
+    subtractOperation,
+    calculateResult,
+  } = useCalculator();
+
   return (
     <View style={styles.calculatorContainer}>
       <View style={{ paddingHorizontal: 30, paddingBottom: 20 }}>
@@ -16,11 +28,16 @@ export default function CaculadoraScreen() {
         >
           {number}
         </Text>
-        <Text style={styles.subResults}>150</Text>
+        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.subResults}>
+          {
+            //es para que cuando el numero previo que es el de abajo este en 0 se desaparesca
+            prevnumber === '0' ? ' ' : prevnumber
+          }
+        </Text>
       </View>
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => clean('C')}
+          onPress={() => clean()}
           lable="C"
           color={colors.lightGray}
           labelTextColor
@@ -38,8 +55,8 @@ export default function CaculadoraScreen() {
           labelTextColor
         />
         <CalculatorButton
-          onPress={() => console.log('/')}
-          lable="/"
+          onPress={() => divideOperation()}
+          lable="÷"
           color={colors.orange}
         />
       </View>
@@ -60,7 +77,7 @@ export default function CaculadoraScreen() {
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('x')}
+          onPress={() => multiplyOperation()}
           lable="x"
           color={colors.orange}
         />
@@ -82,7 +99,7 @@ export default function CaculadoraScreen() {
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('-')}
+          onPress={() => subtractOperation()}
           lable="-"
           color={colors.orange}
         />
@@ -104,7 +121,7 @@ export default function CaculadoraScreen() {
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('+')}
+          onPress={() => addOperation()}
           lable="+"
           color={colors.orange}
         />
@@ -122,7 +139,7 @@ export default function CaculadoraScreen() {
           color={colors.darakGray}
         />
         <CalculatorButton
-          onPress={() => console.log('=')}
+          onPress={() => calculateResult()}
           lable="="
           color={colors.orange}
         />
